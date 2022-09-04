@@ -5,12 +5,12 @@ using WebApi.Entities;
 
 namespace WebApi.Application.MovieOperations.Querys
 {
-    public class GetMovieQuery
+    public class GetListMovieQuery
     {
         private readonly IMovieStoreDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public GetMovieQuery(IMovieStoreDbContext dbContext, IMapper mapper)
+        public GetListMovieQuery(IMovieStoreDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
@@ -19,7 +19,8 @@ namespace WebApi.Application.MovieOperations.Querys
 
         public List<MovieViewModel> Handle()
         {
-            var movies = _dbContext.Movies.Where(x => x.IsActive == true).OrderBy(x => x.ID).ToList<Movie>();
+            var movies = _dbContext.Movies.Include(x=> x.Genre)
+                .Where(x => x.IsActive == true).OrderBy(x => x.ID).ToList<Movie>();
 
             List<MovieViewModel> model = _mapper.Map<List<MovieViewModel>>(movies);
             return model;

@@ -19,12 +19,12 @@ namespace WebApi.DbOprations
                     new Movie
                     {
                         // ID = 1,
-                        Title = "Ayla",
-                        Year = "2015",
-                        Genre = "Kore",
-                        Director = "Murat ekşi",
-                        Players = "Ayla, Süleyman, Musto",
-                        Price = 10,
+                        GenreID = 1,
+                        Title = "John Wick",
+                        Year = "2014",
+                        Director = "Chad Stahelski",
+                        Players = "Keanu Reeves, Chad Stahelski, Bridget Moynahan, lan McShane ",
+                        Price = 50,
                         IsActive = true
                         
                     },
@@ -32,17 +32,31 @@ namespace WebApi.DbOprations
                     new Movie
                     {
                         // ID = 2,
-                        Title = "Thor 2",
-                        Year = "2014",
-                        Genre = "Marvel",
-                        Director = "Mack",
-                        Players = "Thor, Justin",
-                        Price = 25,
+                        GenreID = 3,
+                        Title = "Minyonlar 2: Gru'nun Yükselişi",
+                        Year = "2022",
+                        Director = "Kyle Balda, Brad Ableson, Jonathan Del Val",
+                        Players = " Steve Carell, Alan Arkin, Taraji P. Henson",
+                        Price = 85,
                         IsActive = true
 
                     }
-
                     );
+
+                context.Genres.AddRange(
+                   new Genre
+                   {
+                       Name = "Aksiyon "
+                   },
+                   new Genre
+                   {
+                       Name = "Bilimkurgu "
+                   },
+                   new Genre
+                   {
+                       Name = "Animasyon"
+                   }
+               );
 
                 context.SaveChanges();
 
