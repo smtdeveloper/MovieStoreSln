@@ -22,7 +22,7 @@ namespace WebApi.Application.MovieOperations.Commands
             var movie = _movieStoreDbContext.Movies.SingleOrDefault(x => x.Title == Model.Title);
 
             if (movie != null)
-                throw new InvalidOperationException("Kitap zaten mevcut.");
+                throw new InvalidOperationException("Film zaten mevcut.");
 
             movie = _mapper.Map<Movie>(Model);
 

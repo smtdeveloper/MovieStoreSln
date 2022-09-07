@@ -23,6 +23,7 @@ namespace WebApi.Application.MovieOperations.Querys
                 .Where(x => x.IsActive == true).OrderBy(x => x.ID).ToList<Movie>();
 
             List<MovieViewModel> model = _mapper.Map<List<MovieViewModel>>(movies);
+
             return model;
         }
 
