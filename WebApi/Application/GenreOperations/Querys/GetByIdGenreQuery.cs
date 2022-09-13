@@ -29,6 +29,7 @@ namespace WebApi.Application.GenreOperations.Querys
             GenreDetailModel model = _mapper.Map<GenreDetailModel>(genre);
             
             return model;
+            
 
 
         }

@@ -38,7 +38,7 @@ namespace WebApi.Application.MovieOperations.Commands
         public string Title { get; set; }
         public string Year { get; set; }
         public string Director { get; set; }
-        public string Players { get; set; }
+        public string Actors { get; set; }
         public int Price { get; set; }
     }
 
