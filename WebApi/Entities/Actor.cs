@@ -9,5 +9,6 @@ namespace WebApi.Entities
         public string Name { get; set; }
         public string LastName { get; set; }
         public string PlayedMovies { get; set; }
+        public bool IsAvtive { get; set; } = true;
     }
 }

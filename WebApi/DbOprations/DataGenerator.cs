@@ -22,12 +22,12 @@ namespace WebApi.DbOprations
                 context.SaveChanges();
 
                 context.Actors.AddRange(
-                  new Actor { Name = "Keanu", LastName = "Reeves" },
-                  new Actor { Name = "Chad", LastName = "Stahelski" },
-                  new Actor { Name = "Bridget", LastName = "Moynahan" },
-                  new Actor { Name = "lan", LastName = "McShane" },
-                  new Actor { Name = "Steve", LastName = "Carell" },
-                  new Actor { Name = "Alan", LastName = "Arkin" }
+                  new Actor { Name = "Keanu", LastName = "Reeves" , PlayedMovies = "John Wick" , IsAvtive = true },
+                  new Actor { Name = "Chad", LastName = "Stahelski", PlayedMovies = "John Wick", IsAvtive = true },
+                  new Actor { Name = "Bridget", LastName = "Moynahan", PlayedMovies = "John Wick", IsAvtive = true },
+                  new Actor { Name = "lan", LastName = "McShane" , PlayedMovies = "John Wick", IsAvtive = true },
+                  new Actor { Name = "Steve", LastName = "Carell", PlayedMovies = "Minyonlar 2: Gru'nun Yükselişi", IsAvtive = true },
+                  new Actor { Name = "Alan", LastName = "Arkin", PlayedMovies = "Minyonlar 2: Gru'nun Yükselişi", IsAvtive = true }
                   );
                 context.SaveChanges();
 
@@ -83,6 +83,7 @@ namespace WebApi.DbOprations
              LastName = "AKCA",
              Email = "SMT@gmail.com",
              Password = "123456",
+             IsActive = true
              
          },
          new Customer
@@ -91,7 +92,8 @@ namespace WebApi.DbOprations
              LastName = "AKCA",
              Email = "eslem@gmail.com",
              Password = "123456",
-             
+             IsActive = true
+
          },
          new Customer
          {
@@ -99,7 +101,8 @@ namespace WebApi.DbOprations
              LastName = "DemirKıran",
              Email = "burak@gmail.com",
              Password = "123456",
-            
+             IsActive = true
+
          });
 
 

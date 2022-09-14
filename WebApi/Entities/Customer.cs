@@ -11,7 +11,7 @@ namespace WebApi.Entities
         public string Email { get; set; }
         public string Password { get; set; }
         public bool IsActive { get; set; } = true;
-        public string RefreshToken { get; set; }
+        public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpireDate { get; set; }
     }
 }

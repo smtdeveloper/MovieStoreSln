@@ -66,6 +66,7 @@ namespace WebApi.Controllers
             command.Id = id;
 
             command.Handle();
+
             return Ok();
 
         }
