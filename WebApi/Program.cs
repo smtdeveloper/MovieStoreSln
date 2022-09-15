@@ -7,30 +7,23 @@ using WebApi.DbOprations;
 var builder = WebApplication.CreateBuilder(args);
 
 
+ConfigurationManager configuration = builder.Configuration; // allows both to access and to set up the config
+IWebHostEnvironment environment = builder.Environment;
 
-// Add services to the container.
-
-
-//ConfigurationManager Configuration = builder.Configuration;
-
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
-//{
-//    opt.TokenValidationParameters = new TokenValidationParameters
-//    {
-//        ValidateAudience = true,
-//        ValidateIssuer = true,
-//        ValidateLifetime = true,
-//        ValidateIssuerSigningKey = true,
-//        ValidIssuer = Configuration["Token:Issuer"],
-//        ValidAudience = Configuration["Token:Audience"],
-//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:SecuritKey"])),
-//        ClockSkew = TimeSpan.Zero
-//    };
-
-//});
-
-//builder.Services.AddTransient<ILoggerService, ConsoleLogger>();
-
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+{
+    opt.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateAudience = true,
+        ValidateIssuer = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = configuration["Token:Issuer"],
+        ValidAudience = configuration["Token:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:SecurityKey"])),
+        ClockSkew = TimeSpan.Zero
+    };
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -40,9 +33,12 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddDbContext<MovieStoreDbContext>(options => options.UseInMemoryDatabase(databaseName: "MoveiStoreDB"));
+builder.Services.AddScoped<IMovieStoreDbContext, MovieStoreDbContext>();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IMovieStoreDbContext>(Provider => Provider.GetService<MovieStoreDbContext>());
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+//builder.Services.AddSingleton<ILoggerService, ConsoleLogger>();
 
 var app = builder.Build();
 
@@ -60,12 +56,21 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseAuthentication();
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+//app.UseCustomExceptionMiddleware();
+
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    DataGenerator.Initialize(services);
+}
 
 app.Run();

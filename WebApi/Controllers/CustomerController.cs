@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Application.CustomerOperations.Commands.CreateCustomer;
+using WebApi.Application.CustomerOperations.Commands.CreateToken;
 using WebApi.Application.CustomerOperations.Commands.DeleteCustomer;
+using WebApi.Application.CustomerOperations.Commands.RefreshToken;
+using WebApi.Application.TokenOperations.Models;
 using WebApi.DbOprations;
 
 namespace WebApi.Controllers
@@ -21,7 +24,7 @@ namespace WebApi.Controllers
             _configuration = configuration;
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public IActionResult CreateCustomer([FromBody] CreateCustomerModel newCustomer)
         {
             CreateCustomerCommand command = new CreateCustomerCommand(_context, _mapper);
@@ -30,6 +33,30 @@ namespace WebApi.Controllers
 
             return Ok();    
         }
+
+        [HttpPost("connect/token")]
+        public ActionResult<Token> CreateToken([FromBody] CreateTokenModel login)
+        {
+
+            CreateTokenCommand command = new CreateTokenCommand(_context, _mapper, _configuration);
+            command.Model = login;
+            var token = command.Handle();
+            return token;
+
+        }
+
+        [HttpGet("refreshToken")]
+        public ActionResult<Token> RefreshToken([FromQuery] string token)
+        {
+
+            RefreshTokenCommand command = new RefreshTokenCommand(_context, _configuration);
+            command.RefrehToken = token;
+            var result = command.Handle();
+            return result;
+
+        }
+
+
 
         [HttpDelete("{id}")]
         public IActionResult DeleteCustomer([FromRoute] int id)
