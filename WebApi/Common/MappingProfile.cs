@@ -10,6 +10,7 @@ using WebApi.Application.GenreOperations.Commands;
 using WebApi.Application.GenreOperations.Querys;
 using WebApi.Application.MovieOperations.Commands;
 using WebApi.Application.MovieOperations.Querys;
+using WebApi.Application.OrderOperations.Model;
 using WebApi.Entities;
 
 namespace WebApi.Common
@@ -58,8 +59,18 @@ namespace WebApi.Common
             CreateMap<Director, GetListDirectorModel>().ReverseMap();
 
             CreateMap<Director, GetByIdDirectorModel>().ReverseMap();
-            
-            
+
+
+            //Order
+            CreateMap<CreateOrderModel, Order>().ReverseMap();
+            CreateMap<UpdateOrderModel, Order>().ReverseMap();
+
+            CreateMap<Customer, OrderViewModel>()
+                .ForMember(dest => dest.NameSurname, opt => opt.MapFrom(m => m.Name + " " + m.LastName))
+                .ForMember(dest => dest.Movies, opt => opt.MapFrom(m => m.Orders.Select(s => s.Movie.Title)))
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(m => m.Orders.Select(s => s.Movie.Price)))
+                .ForMember(dest => dest.PurchasedDate, opt => opt.MapFrom(m => m.Orders.Select(s => s.purchasedTime)));
+
 
 
 

@@ -13,5 +13,8 @@ namespace WebApi.Entities
         public bool IsActive { get; set; } = true;
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpireDate { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; }
+       // public virtual ICollection<FavoritesGenre> FavoritesGenres { get; set; }
     }
 }
