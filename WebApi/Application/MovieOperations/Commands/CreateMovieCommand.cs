@@ -2,12 +2,12 @@
 using WebApi.DbOprations;
 using WebApi.Entities;
 
-namespace WebApi.Application.MovieOperations.Commands
-{
+namespace WebApi.Application.MovieOperations.Commands;
+
     public class CreateMovieCommand
     {
         public CreateMovieModel Model { get; set; }
-
+   
         private readonly IMovieStoreDbContext _movieStoreDbContext;
         private readonly IMapper _mapper;
 
@@ -42,4 +42,4 @@ namespace WebApi.Application.MovieOperations.Commands
         public int Price { get; set; }
     }
 
-}
+

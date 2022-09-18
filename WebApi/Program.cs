@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WebApi.DbOprations;
+using WebApi.Middlewares;
+using WebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,7 +40,7 @@ builder.Services.AddScoped<IMovieStoreDbContext, MovieStoreDbContext>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IMovieStoreDbContext>(Provider => Provider.GetService<MovieStoreDbContext>());
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-//builder.Services.AddSingleton<ILoggerService, ConsoleLogger>();
+builder.Services.AddSingleton<ILoggerService, ConsoleLogger>();
 
 var app = builder.Build();
 
@@ -63,7 +65,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-//app.UseCustomExceptionMiddleware();
+app.UseCustomExceptionMiddle();
 
 app.MapControllers();
 
