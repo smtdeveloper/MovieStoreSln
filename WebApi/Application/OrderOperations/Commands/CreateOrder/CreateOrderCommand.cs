@@ -21,14 +21,12 @@ namespace WebApi.Application.OrderOperations.Commands.CreateOrder
         {
             var customer = _dbContext.Customers.SingleOrDefault(s => s.Id == Model.CustomerId);
             var movies = _dbContext.Movies.SingleOrDefault(s => s.ID == Model.MovieId);
-            var order = _dbContext.Orders.SingleOrDefault(s => s.CustomerId == Model.CustomerId && s.MovieId == Model.MovieId);
 
             if (customer is null)
                 throw new InvalidOperationException("Müşteri bulunamadı!");
-            else if (movies is null)
+            if (movies is null)
                 throw new InvalidOperationException("Film bulunamadı!");
-            else if (order is not null)
-                throw new InvalidOperationException("Müşteri, daha önce bu filmi satın almış!");
+           
 
             var result = _mapper.Map<Order>(Model);
             result.purchasedTime = DateTime.Now;

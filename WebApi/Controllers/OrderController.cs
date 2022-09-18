@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Application.OrderOperations.Commands.CreateOrder;
@@ -11,6 +12,7 @@ using WebApi.DbOprations;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class OrderController : ControllerBase
@@ -62,9 +64,7 @@ namespace WebApi.Controllers
             UpdateOrderCommand command = new UpdateOrderCommand(_dbContext, _mapper);
             command.Model = model;
             command.OrderId = Id;
-
-           
-
+            
             command.Handle();
 
             return Ok();
@@ -74,10 +74,8 @@ namespace WebApi.Controllers
         public IActionResult SoftDelete([FromRoute] int Id)
         {
             SoftDeleteOrderCommand command = new SoftDeleteOrderCommand(_dbContext);
+
             command.OrderId = Id;
-
-          
-
             command.Handle();
 
             return Ok();
